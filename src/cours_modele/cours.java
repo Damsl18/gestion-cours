@@ -47,17 +47,42 @@ public class cours {
             e.printStackTrace();
         }
     }
-    public static void update(int id, String nouveauNom) {
-        String sql = "UPDATE t_etudiant SET nom = ? WHERE id = ?";
+    public static void readById(int id){
+        String sql =  "SELECT * FROM cours WHERE id = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)){
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            System.out.println("ID: " + rs.getInt("id") + 
+                    " | titulaire: " + rs.getInt("titulaire") + 
+                    " | nom: " + rs.getString("nom_cours") + 
+                    " | duree: " + rs.getString("duree") + 
+                    " | Description: " + rs.getString("description"));
+        } catch (Exception e) {
+            System.out.println("Erreur, id non trouvé");
+            e.printStackTrace();
+        }
+    }
+    public static void update(int id, String statut) {
+        String sql = "UPDATE cours SET statut = ? WHERE id = ?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
-            pstmt.setString(1, nouveauNom);
+            pstmt.setString(1, statut);
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
-            System.out.println("Etudiant mis à jour !");
+            System.out.println("Cours mis à jour !");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    public static void delete(int id) {
+        String sql = "DELETE FROM cours WHERE id = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("Cours supprimé !");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }  
     
     
     
