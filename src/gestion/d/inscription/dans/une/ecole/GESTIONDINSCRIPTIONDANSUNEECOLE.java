@@ -7,6 +7,8 @@ package gestion.d.inscription.dans.une.ecole;
 import graphic.graphic;
 import mysql.connexion;
 import com.mysql.cj.MysqlConnection;
+import cours_modele.cours;
+import user_modele.utilisateurs;
 /**
  *
  * @author DAVID

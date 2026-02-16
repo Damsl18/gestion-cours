@@ -16,8 +16,8 @@ import static mysql.connexion.getConnection;
  * @author DAVID
  */
 public class utilisateurs {
-    public static void insertData(String postnom, String prenom, String tel, String password, String promotion, String nom, String duree,String description){
-          String sql = "INSERT INTO utilisateurs (nom_user, postnom_user, prenom_user, tel_user, password, promotion) VALUES (?, ?, ?, ?, ?, ?)" ;
+    public static void insertData( String nom, String postnom, String prenom, String tel, String password, String promotion){
+          String sql = "INSERT INTO utilisateurs (nom_user, postnom_user, prenom_user, tel_user, password_user, promotion) VALUES (?, ?, ?, ?, ?, ?)" ;
           try(PreparedStatement ps=getConnection().prepareStatement(sql)) {
               ps.setString(1, nom);
               ps.setString(2, postnom);
@@ -27,7 +27,7 @@ public class utilisateurs {
               ps.setString(6, promotion);
               ps.executeUpdate();             
         } catch (Exception e) {
-              System.err.println(""+e.getMessage());
+              System.err.println("" +e.getMessage());
             
         }
     }
@@ -38,13 +38,14 @@ public class utilisateurs {
             
             while (rs.next()) {
                 System.out.println("ID: " + rs.getInt("id") + 
-                                   " | Nom: " + rs.getInt("nom_user") + 
+                                   " | Nom: " + rs.getString("nom_user") + 
                                    " | Postnom: " + rs.getString("postnom_user")+
                         " | prenom: " + rs.getString("prenom_user") + 
-                        " | tel: " + rs.getString("tel") + 
+                        " | tel: " + rs.getString("tel_user") + 
                         " | promotion: " + rs.getString("promotion"));
             }
         } catch (SQLException e) {
+            System.err.println("" +e.getMessage());
             e.printStackTrace();
         }
     }
@@ -54,18 +55,21 @@ public class utilisateurs {
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)){
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
-            System.out.println("ID: " + rs.getInt("id") + 
+            while(rs.next()){
+                System.out.println("ID: " + rs.getInt("id") + 
                     " | Nom: " + rs.getString("nom_user") + 
                     " | postnom: " + rs.getString("postnom_user") + 
                     " | prenom: " + rs.getString("prenom_user") + 
                     " | promotion: " + rs.getString("promotion"));
+            }
+            
         } catch (Exception e) {
             System.out.println("Erreur, id non trouvé");
             e.printStackTrace();
         }
     }
     public static void update(int id, String nom, String postnom, String prenom) {
-        String sql = "UPDATE cours SET nom_user = ?, postnom_user = ?, prenom_user = ?, tel_user = ? WHERE id = ?";
+        String sql = "UPDATE utilisateurs SET nom_user = ?, postnom_user = ?, prenom_user = ?, tel_user = ? WHERE id = ?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
             pstmt.setString(1, nom );
             pstmt.setString(2, postnom);
