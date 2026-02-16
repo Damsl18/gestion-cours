@@ -10,5 +10,5 @@ package mysql;
  * @author DAVID
  */
 public class connexion {
-    
+    private static final String URL ="";
 }
