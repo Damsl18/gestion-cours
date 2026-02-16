@@ -5,6 +5,8 @@
  */
 package gestion.d.inscription.dans.une.ecole;
 import graphic.graphic;
+import mysql.connexion;
+import com.mysql.cj.MysqlConnection;
 /**
  *
  * @author DAVID
@@ -17,7 +19,7 @@ public class GESTIONDINSCRIPTIONDANSUNEECOLE {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Hello world");
-        new graphic();
+        connexion.getConnection();
     }
     
 }
