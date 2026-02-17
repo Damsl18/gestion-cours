@@ -64,15 +64,22 @@ public class professeur {
             e.printStackTrace();
         }
     }
-    public static void update(int id, String nom, String postnom, String prenom) {
+    public static void update(int id, String nom, String postnom, String prenom, String tel) {
         String sql = "UPDATE professeur SET nom_prof = ?, postnom_prof = ?, prenom_prof = ?, tel_prof = ? WHERE id = ?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
             pstmt.setString(1, nom );
             pstmt.setString(2, postnom);
             pstmt.setString(3, prenom);
-            pstmt.setInt(4, id);
+            pstmt.setString(4, tel);
+            pstmt.setInt(5, id);
             pstmt.executeUpdate();
-            System.out.println("Professeur mis à jour !");
+            int test = pstmt.executeUpdate(); 
+            if (test>0) {
+                System.out.println("Professeur mis à jour !");
+            } else{
+                System.out.println("Erreur, id non trouvé");
+            }
+           
         } catch (SQLException e) {
             System.out.println("Erreur, id non trouvé");
             e.printStackTrace();

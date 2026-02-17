@@ -31,6 +31,8 @@ public class cours {
             
         }
     }
+    
+    //peut permettre de lister TOUT les cours
     public static void readAll() {
         String sql = "SELECT * FROM cours";
         try (Statement stmt = getConnection().createStatement();
@@ -68,7 +70,12 @@ public class cours {
             pstmt.setString(1, statut);
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
-            System.out.println("Cours mis à jour !");
+            int test = pstmt.executeUpdate(); 
+            if (test>0) {
+                System.out.println("Cours mis à jour !");
+            } else{
+                System.out.println("Erreur, id non trouvé");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

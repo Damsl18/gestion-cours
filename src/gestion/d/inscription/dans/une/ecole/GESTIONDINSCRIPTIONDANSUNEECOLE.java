@@ -8,6 +8,7 @@ import graphic.graphic;
 import mysql.connexion;
 import com.mysql.cj.MysqlConnection;
 import cours_modele.cours;
+import participation_modele.participation;
 import user_modele.utilisateurs;
 /**
  *
@@ -21,7 +22,9 @@ public class GESTIONDINSCRIPTIONDANSUNEECOLE {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Hello world");
-        connexion.getConnection();
+        boolean state = utilisateurs.exist(17, "0000");
+        System.out.println(state);
+        
     }
     
 }

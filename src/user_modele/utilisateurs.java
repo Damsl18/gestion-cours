@@ -5,11 +5,13 @@
  */
 package user_modele;
 
+import java.awt.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import static mysql.connexion.getConnection;
+import java.util.*;
 
 /**
  *
@@ -25,7 +27,8 @@ public class utilisateurs {
               ps.setString(4, tel);
               ps.setString(5, password);
               ps.setString(6, promotion);
-              ps.executeUpdate();             
+              ps.executeUpdate();   
+              System.out.println("effectué !");
         } catch (Exception e) {
               System.err.println("" +e.getMessage());
             
@@ -49,7 +52,6 @@ public class utilisateurs {
             e.printStackTrace();
         }
     }
-    
     public static void readById(int id){
         String sql =  "SELECT * FROM utilisateurs WHERE id = ?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)){
@@ -68,19 +70,40 @@ public class utilisateurs {
             e.printStackTrace();
         }
     }
-    public static void update(int id, String nom, String postnom, String prenom) {
+    public static void update(int id, String nom, String postnom, String prenom, String tel) {
         String sql = "UPDATE utilisateurs SET nom_user = ?, postnom_user = ?, prenom_user = ?, tel_user = ? WHERE id = ?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
             pstmt.setString(1, nom );
             pstmt.setString(2, postnom);
             pstmt.setString(3, prenom);
-            pstmt.setInt(4, id);
+            pstmt.setString(4, tel);
+            pstmt.setInt(5, id);
             pstmt.executeUpdate();
-            System.out.println("Etudiant mis à jour !");
+            int test = pstmt.executeUpdate(); 
+            if (test>0) {
+                System.out.println("Etudiant mis à jour !");
+            } else{
+                System.out.println("Erreur, id non trouvé");
+            }
         } catch (SQLException e) {
-            System.out.println("Erreur, id non trouvé");
             e.printStackTrace();
         }
+    }
+    
+    public static boolean exist(int id, String mdp){
+        String sql = "SELECT password_user FROM utilisateurs WHERE id = ? AND password_user = ?";
+        String mot = "";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)){
+            pstmt.setInt(1, id);
+            pstmt.setString(2, mdp);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                mot = rs.getString("password_user");
+            }          
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return !mot.isEmpty();
     }
     public static void delete(int id) {
         String sql = "DELETE FROM utilisateurs WHERE id = ?";
