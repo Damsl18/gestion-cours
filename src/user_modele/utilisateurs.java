@@ -70,7 +70,7 @@ public class utilisateurs {
             
             while (rs.next()) {
                 String identifiant = String.valueOf(rs.getInt("id"));
-                String Nom = String.valueOf(rs.getInt("nom_user"));
+                String Nom = String.valueOf(rs.getString("nom_user"));
                 String Postnom = rs.getString("postnom_user");
                 String Prenom = rs.getString("prenom_user");
                 String tel = rs.getString("tel_user");

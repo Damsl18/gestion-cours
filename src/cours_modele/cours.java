@@ -22,16 +22,18 @@ import static mysql.connexion.getConnection;
  */
 public class cours {
     
-    public static void insertData(String titulaire, String nom, String duree,String description){
-          String sql = "INSERT INTO cours (titulaire,nom_cours,duree, description) VALUES (?, ?, ?, ?)" ;
+    public static void insertData(int titulaire, String nom, String duree,String description){
+          String sql = "INSERT INTO cours (titulaire, nom_cours, duree, description) VALUES (?, ?, ?, ?)" ;
           try(PreparedStatement ps=getConnection().prepareStatement(sql)) {
-              ps.setString(1, titulaire);
+              ps.setInt(1, titulaire);
               ps.setString(2, nom);
               ps.setString(3, duree);
-              ps.setString(3, description);
-              ps.executeUpdate();             
+              ps.setString(4, description);
+              ps.executeUpdate();         
+              System.out.println("Success !");
         } catch (Exception e) {
               System.err.println(""+e.getMessage());
+              
             
         }
     }

@@ -62,7 +62,7 @@ public class professeur {
             
             while (rs.next()) {
                 String identifiant = String.valueOf(rs.getInt("id"));
-                String Nom = String.valueOf(rs.getInt("nom_prof"));
+                String Nom = String.valueOf(rs.getString("nom_prof"));
                 String Postnom = rs.getString("postnom_prof");
                 String Prenom = rs.getString("prenom_prof");
                 String tel = rs.getString("tel_prof");
