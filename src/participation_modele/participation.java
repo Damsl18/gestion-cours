@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import static mysql.connexion.getConnection;
@@ -68,14 +69,49 @@ public class participation {
             e.printStackTrace();
         }
     }
-        public static void delete(int id) {
-        String sql = "DELETE FROM participation WHERE id = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-            System.out.println("Cours supprimé !");
+    public static void remplirTableauTout(JTable table_toutcours) {
+        String sql = "SELECT * FROM participation";
+        
+        DefaultTableModel table = new DefaultTableModel();
+        table.addColumn("Identifiant");
+        table.addColumn("Identifiant Etudiant");
+        table.addColumn("Identifiant Cours");
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql);
+                ){
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String identifiant = String.valueOf(rs.getInt("id"));
+                String Etudiant = String.valueOf(rs.getInt("etudiant"));
+                String cours = String.valueOf(rs.getInt("cours"));
+                System.out.println("ID: " + rs.getInt("id") + 
+                                   " | Titulaire: " + rs.getInt("Etudiant"));
+                String[] row = {identifiant, Etudiant, cours};
+                table.addRow(row);
+                
+                table_toutcours.setModel(table);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+        public static void deleteParticipation(int id) {
+        String sql = "DELETE FROM participation WHERE id = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("Participation au Cours supprimé !");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        }
+        public static void delete(int id) {
+            String sql = "DELETE FROM participation WHERE etudiant = ?";
+            try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+                pstmt.setInt(1, id);
+                pstmt.executeUpdate();
+                System.out.println("Participation Annulée !");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 }

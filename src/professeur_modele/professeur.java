@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import static mysql.connexion.getConnection;
 
 /**
@@ -43,6 +45,32 @@ public class professeur {
             }
         } catch (SQLException e) {
             System.err.println("" +e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public static void remplirTableau(JTable tableau_prof) {
+        String sql = "SELECT * FROM professeur";
+        
+        DefaultTableModel table = new DefaultTableModel();
+        table.addColumn("Identifiant");
+        table.addColumn("Nom");
+        table.addColumn("Postnom");
+        table.addColumn("Prenom");
+        table.addColumn("Téléphone");
+        try (Statement stmt = getConnection().createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                String identifiant = String.valueOf(rs.getInt("id"));
+                String Nom = String.valueOf(rs.getInt("nom_prof"));
+                String Postnom = rs.getString("postnom_prof");
+                String Prenom = rs.getString("prenom_prof");
+                String tel = rs.getString("tel_prof");
+                String[] row = {identifiant, Nom, Postnom, Prenom, tel};
+                table.addRow(row);
+                tableau_prof.setModel(table);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

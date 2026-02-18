@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import static mysql.connexion.getConnection;
 import java.util.*;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import static mysql.connexion.getConnection;
 
 /**
  *
@@ -49,6 +52,34 @@ public class utilisateurs {
             }
         } catch (SQLException e) {
             System.err.println("" +e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public static void remplirTableau(JTable tableau) {
+        String sql = "SELECT * FROM utilisateurs";
+        
+        DefaultTableModel table = new DefaultTableModel();
+        table.addColumn("Identifiant");
+        table.addColumn("Nom");
+        table.addColumn("Postnom");
+        table.addColumn("Prenom");
+        table.addColumn("Téléphone");
+        table.addColumn("Promotion");
+        try (Statement stmt = getConnection().createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                String identifiant = String.valueOf(rs.getInt("id"));
+                String Nom = String.valueOf(rs.getInt("nom_user"));
+                String Postnom = rs.getString("postnom_user");
+                String Prenom = rs.getString("prenom_user");
+                String tel = rs.getString("tel_user");
+                String promo = rs.getString("promotion");
+                String[] row = {identifiant, Nom, Postnom, Prenom, tel, promo};
+                table.addRow(row);
+                tableau.setModel(table);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

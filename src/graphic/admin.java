@@ -191,6 +191,8 @@ public class admin extends javax.swing.JFrame {
                 if(state){
                     page.setVisible(true);
                     this.setVisible(false);
+                } else{
+                    jLabel5.setText("Votre id ou votre mot de passe est incorrecte !");
                 }
             }
         } catch (Exception e) {

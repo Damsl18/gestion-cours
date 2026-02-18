@@ -13,16 +13,25 @@ import cours_modele.cours;
 import java.util.ArrayList;
 import user_modele.utilisateurs;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import participation_modele.participation;
 
 public class page_de_cours extends javax.swing.JFrame {
     /**
      * Creates new form page_de_cours
      */
+    public String id;
+    public String name;
+    public String pname;
+    public String prename;
+    public String tel;
+    
     public page_de_cours() {
         initComponents();
         cours.remplirTableau(table_toutcours);
         participation.remplirTableau(table_cours, 1);
+        nom_info.setText(name);
+        
     }
 
     /**
@@ -35,16 +44,9 @@ public class page_de_cours extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
+        jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        btn_infos = new javax.swing.JButton();
-        panel_info = new javax.swing.JPanel();
-        panel_id = new javax.swing.JLabel();
-        panel_nom = new javax.swing.JLabel();
-        panel_postnom = new javax.swing.JLabel();
-        panel_prenom = new javax.swing.JLabel();
-        panel_promotion = new javax.swing.JLabel();
-        panel_tel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -53,7 +55,7 @@ public class page_de_cours extends javax.swing.JFrame {
         table_cours = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        vider_cours = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -65,6 +67,14 @@ public class page_de_cours extends javax.swing.JFrame {
         confirmer_participer = new javax.swing.JButton();
         valider_participer = new javax.swing.JButton();
         annuler_participer = new javax.swing.JButton();
+        panel_info = new javax.swing.JPanel();
+        id_info = new javax.swing.JLabel();
+        nom_info = new javax.swing.JLabel();
+        postnom_info = new javax.swing.JLabel();
+        prenom_info = new javax.swing.JLabel();
+        tel_info = new javax.swing.JLabel();
+        promotion_info = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -77,50 +87,21 @@ public class page_de_cours extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Bienvenu dans votre portail etudiant");
-
-        btn_infos.setText("Mes infos");
-        btn_infos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_infosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panel_infoLayout = new javax.swing.GroupLayout(panel_info);
-        panel_info.setLayout(panel_infoLayout);
-        panel_infoLayout.setHorizontalGroup(
-            panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_infoLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_id)
-                    .addComponent(panel_nom)
-                    .addComponent(panel_postnom)
-                    .addComponent(panel_prenom)
-                    .addComponent(panel_promotion)
-                    .addComponent(panel_tel))
-                .addContainerGap(167, Short.MAX_VALUE))
-        );
-        panel_infoLayout.setVerticalGroup(
-            panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_infoLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(panel_id)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_nom)
-                .addGap(12, 12, 12)
-                .addComponent(panel_postnom)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(panel_prenom)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_promotion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_tel)
-                .addGap(25, 25, 25))
-        );
 
         jButton1.setText("Deconnexion");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -152,8 +133,18 @@ public class page_de_cours extends javax.swing.JFrame {
         jLabel6.setText("Aucun cours pour l'instant");
 
         jButton2.setText("Supprimer le cours");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Vider la liste");
+        vider_cours.setText("Vider la liste");
+        vider_cours.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vider_coursActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -161,20 +152,20 @@ public class page_de_cours extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(263, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(85, 85, 85)
+                .addComponent(vider_cours)
+                .addGap(292, 292, 292))
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(438, 438, 438)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(308, 308, 308)
+                        .addGap(360, 360, 360)
                         .addComponent(jLabel6)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(205, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(49, 49, 49)
-                .addComponent(jButton3)
-                .addGap(386, 386, 386))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,11 +174,11 @@ public class page_de_cours extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(vider_cours)
                     .addComponent(jButton2))
                 .addGap(31, 31, 31))
         );
@@ -241,13 +232,29 @@ public class page_de_cours extends javax.swing.JFrame {
 
         jLabel8.setText("ID du cours");
 
+        label_participer.setForeground(new java.awt.Color(51, 255, 0));
         label_participer.setText("Voulez-vous participer au cours: ");
 
         confirmer_participer.setText("Confirmer");
+        confirmer_participer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmer_participerActionPerformed(evt);
+            }
+        });
 
         valider_participer.setText("Valider");
+        valider_participer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valider_participerActionPerformed(evt);
+            }
+        });
 
         annuler_participer.setText("Annuler");
+        annuler_participer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                annuler_participerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -264,13 +271,12 @@ public class page_de_cours extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(input_participer, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(valider_participer)))
-                .addContainerGap(310, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(263, 263, 263)
-                .addComponent(confirmer_participer, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
-                .addComponent(annuler_participer, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(valider_participer))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(263, 263, 263)
+                        .addComponent(confirmer_participer, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
+                        .addComponent(annuler_participer, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -292,44 +298,95 @@ public class page_de_cours extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Participer à un cours", jPanel4);
 
+        id_info.setText("jLabel1");
+
+        nom_info.setText("jLabel1");
+
+        postnom_info.setText("jLabel1");
+
+        prenom_info.setText("jLabel1");
+
+        tel_info.setText("jLabel1");
+
+        promotion_info.setText("jLabel1");
+
+        javax.swing.GroupLayout panel_infoLayout = new javax.swing.GroupLayout(panel_info);
+        panel_info.setLayout(panel_infoLayout);
+        panel_infoLayout.setHorizontalGroup(
+            panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_infoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(id_info)
+                    .addComponent(nom_info)
+                    .addComponent(postnom_info)
+                    .addComponent(prenom_info)
+                    .addComponent(tel_info)
+                    .addComponent(promotion_info))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel_infoLayout.setVerticalGroup(
+            panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_infoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(id_info)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nom_info)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(postnom_info)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(prenom_info)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tel_info)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(promotion_info)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel12.setText("Mes informations");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(btn_infos, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(532, 532, 532)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(panel_info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel4)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGap(38, 38, 38)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGap(111, 111, 111)
+                            .addComponent(jLabel12)
+                            .addGap(42, 42, 42)
+                            .addComponent(panel_info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGap(221, 221, 221)
+                            .addComponent(jLabel4))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_infos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel4)
+                .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(panel_info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabel12)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -352,17 +409,71 @@ public class page_de_cours extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_infosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_infosActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btn_infosActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         admin connexion = new admin();
         connexion.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void valider_participerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valider_participerActionPerformed
+        // TODO add your handling code here:
+        List<String> liste = new ArrayList<>();
+        try {
+            int id = Integer.parseInt(input_participer.getText());
+            liste = cours.readById(id);
+            String nom = liste.get(2);
+            label_participer.setText("Voulez vous participer au cours " + nom + " ?");
+            
+        } catch (Exception e) {
+            System.out.println("Echec !");
+        }
+
+    }//GEN-LAST:event_valider_participerActionPerformed
+
+    private void confirmer_participerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmer_participerActionPerformed
+        // TODO add your handling code here:
+        List<String> liste = new ArrayList<>();
+        try {
+            int id = Integer.parseInt(input_participer.getText());
+            liste = cours.readById(id);
+            int id_cours = Integer.parseInt(liste.get(0));
+            int id_etudiant = 1;
+            participation.insertData(id_etudiant, id_cours);
+            cours.remplirTableau(table_toutcours);
+            participation.remplirTableau(table_cours, 1);
+            label_participer.setText("Enregistrement effectué avec succès !");
+            input_participer.setText("");
+        } catch (Exception e) {
+            label_participer.setText("Echec d'enregistrement");
+            System.out.println("Echec !");
+        }
+        
+    }//GEN-LAST:event_confirmer_participerActionPerformed
+
+    private void annuler_participerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annuler_participerActionPerformed
+        // TODO add your handling code here:
+        input_participer.setText("");
+        label_participer.setText("");
+    }//GEN-LAST:event_annuler_participerActionPerformed
+
+    private void vider_coursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vider_coursActionPerformed
+        // TODO add your handling code here:
+        int id = 1;
+        cours.viderTableau(table_cours, id);
+        participation.remplirTableau(table_cours, 1);
+    }//GEN-LAST:event_vider_coursActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int state = table_cours.getSelectedRow();
+        if(state != -1){
+            DefaultTableModel table = (DefaultTableModel) table_cours.getModel();
+            int id = Integer.parseInt(String.valueOf(table.getValueAt(state, 0)));
+            participation.deleteParticipation(id);
+            table.removeRow(state);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -401,13 +512,13 @@ public class page_de_cours extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton annuler_participer;
-    private javax.swing.JButton btn_infos;
     private javax.swing.JButton confirmer_participer;
+    private javax.swing.JLabel id_info;
     private javax.swing.JTextField input_participer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -417,19 +528,20 @@ public class page_de_cours extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel label_participer;
-    private javax.swing.JLabel panel_id;
+    private javax.swing.JLabel nom_info;
     private javax.swing.JPanel panel_info;
-    private javax.swing.JLabel panel_nom;
-    private javax.swing.JLabel panel_postnom;
-    private javax.swing.JLabel panel_prenom;
-    private javax.swing.JLabel panel_promotion;
-    private javax.swing.JLabel panel_tel;
+    private javax.swing.JLabel postnom_info;
+    private javax.swing.JLabel prenom_info;
+    private javax.swing.JLabel promotion_info;
     private javax.swing.JTable table_cours;
     private javax.swing.JTable table_toutcours;
+    private javax.swing.JLabel tel_info;
     private javax.swing.JButton valider_participer;
+    private javax.swing.JButton vider_cours;
     // End of variables declaration//GEN-END:variables
 }

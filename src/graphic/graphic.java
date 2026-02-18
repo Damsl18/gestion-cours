@@ -272,6 +272,10 @@ public class graphic extends javax.swing.JFrame {
        //condition pour vérifier si le mot de passe entrée est correcte avec sa confirmation avant d'enregistrer les informations
                 if(mdp.equals(mdp_conf)){
                     utilisateurs.insertData(nom, postnom, prenom, tel, mdp, promotion);
+                    page.name = nom;
+                    page.pname = postnom;
+                    page.prename = prenom;
+                    page.tel = tel;
                     page.setVisible(true);
                     this.setVisible(false);
                 } else {
