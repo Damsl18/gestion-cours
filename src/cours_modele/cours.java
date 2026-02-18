@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import static mysql.connexion.getConnection;
 
 /**
@@ -44,6 +46,36 @@ public class cours {
                                    " | Nom: " + rs.getString("nom_cours")+
                         " | duree: " + rs.getString("duree") + 
                         " | description: " + rs.getString("description"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void remplirTableau(JTable table_toutcours) {
+        String sql = "SELECT * FROM cours";
+        
+        DefaultTableModel table = new DefaultTableModel();
+        table.addColumn("Identifiant");
+        table.addColumn("Nom du cours");
+        table.addColumn("Titulaire");
+        table.addColumn("Duree");
+        try (Statement stmt = getConnection().createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                String identifiant = String.valueOf(rs.getInt("id"));
+                String Titulaire = String.valueOf(rs.getInt("titulaire"));
+                String Nom = rs.getString("nom_cours");
+                String Duree = rs.getString("duree");
+                System.out.println("ID: " + rs.getInt("id") + 
+                                   " | Titulaire: " + rs.getInt("titulaire") + 
+                                   " | Nom: " + rs.getString("nom_cours") +
+                        " | duree: " + rs.getString("duree") + 
+                        " | description: " + rs.getString("description"));
+                String[] row = {identifiant, Nom, Titulaire, Duree};
+                table.addRow(row);
+                
+                table_toutcours.setModel(table);
             }
         } catch (SQLException e) {
             e.printStackTrace();

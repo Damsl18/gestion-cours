@@ -5,7 +5,7 @@
  */
 package user_modele;
 
-import java.awt.List;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,6 +69,30 @@ public class utilisateurs {
             System.out.println("Erreur, id non trouvé");
             e.printStackTrace();
         }
+    }
+    
+    public static List<String> readByName(String nom, String postnom, String prenom, String tel){
+        List <String> liste = new ArrayList<>();
+        String sql =  "SELECT * FROM utilisateurs WHERE nom_user = ? AND tel_user = ? AND postnom_user = ? AND prenom_user = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)){
+            pstmt.setString(1, nom);
+            pstmt.setString(2, tel);
+            pstmt.setString(3, postnom);
+            pstmt.setString(4, prenom);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                liste.add(String.valueOf(rs.getInt("id")));
+                liste.add(rs.getString("nom_user"));
+                liste.add(rs.getString("postnom_user"));
+                liste.add(rs.getString("prenom_user"));
+                liste.add(rs.getString("promotion"));
+                liste.add(rs.getString("tel_user"));
+            }       
+        } catch (Exception e) {
+            System.out.println("Erreur, id non trouvé");
+            e.printStackTrace();
+        }
+        return liste;
     }
     public static void update(int id, String nom, String postnom, String prenom, String tel) {
         String sql = "UPDATE utilisateurs SET nom_user = ?, postnom_user = ?, prenom_user = ?, tel_user = ? WHERE id = ?";

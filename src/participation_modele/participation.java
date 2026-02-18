@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import static mysql.connexion.getConnection;
 
 /**
@@ -35,6 +37,32 @@ public class participation {
             while (rs.next()) {
                 System.out.println("ID Etudiant: " + rs.getInt("etudiant") + 
                                    " | ID cours: " + rs.getInt("cours"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void remplirTableau(JTable table_toutcours, int etudiant) {
+        String sql = "SELECT * FROM participation WHERE etudiant = ?";
+        
+        DefaultTableModel table = new DefaultTableModel();
+        table.addColumn("Identifiant");
+        table.addColumn("Identifiant Etudiant");
+        table.addColumn("Identifiant Cours");
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql);
+                ){
+            pstmt.setInt(1, etudiant);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String identifiant = String.valueOf(rs.getInt("id"));
+                String Etudiant = String.valueOf(rs.getInt("etudiant"));
+                String cours = String.valueOf(rs.getInt("cours"));
+                System.out.println("ID: " + rs.getInt("id") + 
+                                   " | Titulaire: " + rs.getInt("Etudiant"));
+                String[] row = {identifiant, Etudiant, cours};
+                table.addRow(row);
+                
+                table_toutcours.setModel(table);
             }
         } catch (SQLException e) {
             e.printStackTrace();
