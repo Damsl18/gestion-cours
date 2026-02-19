@@ -179,17 +179,20 @@ public class admin extends javax.swing.JFrame {
         page_de_cours page = new page_de_cours();
         page_admis admis = new page_admis();
         try {
-            int id = Integer.parseInt(id_connexion.getText());
+            id = Integer.parseInt(id_connexion.getText());
             String mdp = mdp_connexion.getText();
             boolean state = utilisateurs.exist(id, mdp);
             if (administrator == id){
                 if(state){
                     admis.setVisible(true);
+                    
                     this.setVisible(false);
                 }
             } else{
                 if(state){
+                    utilisateurs.readById(id);
                     page.setVisible(true);
+                    
                     this.setVisible(false);
                 } else{
                     jLabel5.setText("Votre id ou votre mot de passe est incorrecte !");

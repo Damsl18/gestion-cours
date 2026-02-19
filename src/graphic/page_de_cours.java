@@ -25,12 +25,20 @@ public class page_de_cours extends javax.swing.JFrame {
     public String pname;
     public String prename;
     public String tel;
+    public List<String> liste = new ArrayList<>();
+    admin admis = new admin();
+    
     
     public page_de_cours() {
         initComponents();
+        
         cours.remplirTableau(table_toutcours);
         participation.remplirTableau(table_cours, 1);
-        nom_info.setText(name);
+                admin admis = new admin();
+                System.out.println("TEST B000");
+                System.out.println(admis.id);
+        
+        
         
     }
 
@@ -506,6 +514,7 @@ public class page_de_cours extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new page_de_cours().setVisible(true);
+                admin admis = new admin();
             }
         });
     }

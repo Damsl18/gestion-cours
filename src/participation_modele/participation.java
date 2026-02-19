@@ -58,8 +58,6 @@ public class participation {
                 String identifiant = String.valueOf(rs.getInt("id"));
                 String Etudiant = String.valueOf(rs.getInt("etudiant"));
                 String cours = String.valueOf(rs.getInt("cours"));
-                System.out.println("ID: " + rs.getInt("id") + 
-                                   " | Titulaire: " + rs.getInt("Etudiant"));
                 String[] row = {identifiant, Etudiant, cours};
                 table.addRow(row);
                 

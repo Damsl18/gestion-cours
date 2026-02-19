@@ -8,6 +8,7 @@ import graphic.graphic;
 import mysql.connexion;
 import com.mysql.cj.MysqlConnection;
 import cours_modele.cours;
+import graphic.admin;
 import java.util.ArrayList;
 import java.util.List;
 import participation_modele.participation;
@@ -24,9 +25,12 @@ public class GESTIONDINSCRIPTIONDANSUNEECOLE {
     public static void main(String[] args) {
         // TODO code application logic here
         List<String> liste = new ArrayList<>();
+        utilisateurs user = new utilisateurs();
         System.out.println("Hello world");
-        liste = cours.readById(1);
-        System.out.println(liste);
+
+        admin connexion = new admin();
+       
+        
         
     }
     

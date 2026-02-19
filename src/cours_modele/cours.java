@@ -5,6 +5,7 @@
  */
 package cours_modele;
 
+import graphic.page_de_cours;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,6 +24,7 @@ import static mysql.connexion.getConnection;
 public class cours {
     
     public static void insertData(int titulaire, String nom, String duree,String description){
+          page_de_cours page = new page_de_cours();
           String sql = "INSERT INTO cours (titulaire, nom_cours, duree, description) VALUES (?, ?, ?, ?)" ;
           try(PreparedStatement ps=getConnection().prepareStatement(sql)) {
               ps.setInt(1, titulaire);
@@ -31,6 +33,8 @@ public class cours {
               ps.setString(4, description);
               ps.executeUpdate();         
               System.out.println("Success !");
+              
+             
         } catch (Exception e) {
               System.err.println(""+e.getMessage());
               
@@ -51,11 +55,7 @@ public class cours {
                 liste.add(rs.getString("nom_cours"));
                 liste.add(rs.getString("duree"));
                 liste.add(rs.getString("description"));
-                System.out.println("ID: " + rs.getInt("id") + 
-                                   " | Titulaire: " + rs.getInt("titulaire") + 
-                                   " | Nom: " + rs.getString("nom_cours")+
-                        " | duree: " + rs.getString("duree") + 
-                        " | description: " + rs.getString("description"));
+               
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,11 +76,7 @@ public class cours {
                 String Titulaire = String.valueOf(rs.getInt("titulaire"));
                 String Nom = rs.getString("nom_cours");
                 String Duree = rs.getString("duree");
-                System.out.println("ID: " + rs.getInt("id") + 
-                                   " | Titulaire: " + rs.getInt("titulaire") + 
-                                   " | Nom: " + rs.getString("nom_cours") +
-                        " | duree: " + rs.getString("duree") + 
-                        " | description: " + rs.getString("description"));
+                
                 String[] row = {identifiant, Nom, Titulaire, Duree};
                 table.addRow(row);               
                 table_toutcours.setModel(table);
@@ -110,11 +106,7 @@ public class cours {
                 liste.add(rs.getString("nom_cours"));
                 liste.add(rs.getString("duree"));
                 liste.add(rs.getString("description"));
-                System.out.println("ID: " + rs.getInt("id") + 
-                    " | titulaire: " + rs.getInt("titulaire") + 
-                    " | nom: " + rs.getString("nom_cours") + 
-                    " | duree: " + rs.getString("duree") + 
-                    " | Description: " + rs.getString("description"));
+                
             }
             
         } catch (Exception e) {
