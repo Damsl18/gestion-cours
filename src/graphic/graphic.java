@@ -7,6 +7,9 @@ package graphic;
 
 import user_modele.utilisateurs;
 import javax.swing.JLabel;
+import java.util.List;
+import java.util.ArrayList;
+import utilisateur_courant.utilisateurCourant;
 /**
  *
  * @author DAVID
@@ -257,7 +260,7 @@ public class graphic extends javax.swing.JFrame {
     private void btn_inscriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inscriptionActionPerformed
         // TODO add your handling code here:
         //la récupération des données inscrit dans nos jtextfield
-       page_de_cours page = new page_de_cours();
+        List<String> liste = new ArrayList<>();
         try {
             String nom = nom_inscription.getText();
             String postnom = postnom_inscription.getText();
@@ -272,10 +275,9 @@ public class graphic extends javax.swing.JFrame {
        //condition pour vérifier si le mot de passe entrée est correcte avec sa confirmation avant d'enregistrer les informations
                 if(mdp.equals(mdp_conf)){
                     utilisateurs.insertData(nom, postnom, prenom, tel, mdp, promotion);
-                    page.name = nom;
-                    page.pname = postnom;
-                    page.prename = prenom;
-                    page.tel = tel;
+                    liste = utilisateurs.readByName(nom, postnom, prenom, tel);
+                    utilisateurCourant user = new utilisateurCourant(liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4));
+                    page_de_cours page = new page_de_cours(user);
                     page.setVisible(true);
                     this.setVisible(false);
                 } else {
@@ -287,6 +289,9 @@ public class graphic extends javax.swing.JFrame {
         } catch (Exception e) {
             message.setText("Echec de connexion");
             System.out.println("Echec de connexion !");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            
         }
       //reinitialisation des jtextfield
         

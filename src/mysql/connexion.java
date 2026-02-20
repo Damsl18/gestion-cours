@@ -23,9 +23,9 @@ public class connexion {
         if(connexion == null){
             try {
                 connexion = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("Success");
+                System.out.println("Connexion etabli avec la BD");
             } catch (Exception e) {
-                System.out.println("Sorry");
+                System.out.println("Echec de connexion à la base de donnée");
             }
         }
         return connexion;

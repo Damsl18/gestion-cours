@@ -2,8 +2,11 @@ package graphic;
 import graphic.graphic;
 import graphic.page_admis;
 import graphic.page_de_cours;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import user_modele.utilisateurs;
+import utilisateur_courant.utilisateurCourant;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,7 +18,6 @@ import user_modele.utilisateurs;
  * @author LAGALA
  */
 public class admin extends javax.swing.JFrame {
-    public int id;
     /**
      * Creates new form admin
      */
@@ -176,10 +178,11 @@ public class admin extends javax.swing.JFrame {
     private void btn_connexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_connexionActionPerformed
         // TODO add your handling code here:
         int administrator = 1;
-        page_de_cours page = new page_de_cours();
+        // je dois refaire la meme chose comme dans graphic, je dois transmettre les informations
+        List<String> liste = new ArrayList<>();
         page_admis admis = new page_admis();
         try {
-            id = Integer.parseInt(id_connexion.getText());
+            int id = Integer.parseInt(id_connexion.getText());
             String mdp = mdp_connexion.getText();
             boolean state = utilisateurs.exist(id, mdp);
             if (administrator == id){
@@ -187,17 +190,19 @@ public class admin extends javax.swing.JFrame {
                     admis.setVisible(true);
                     
                     this.setVisible(false);
-                }
-            } else{
-                if(state){
-                    utilisateurs.readById(id);
-                    page.setVisible(true);
                     
+                }
+            }
+            liste = utilisateurs.readById(id);
+            utilisateurCourant user = new utilisateurCourant(liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4));
+            page_de_cours page = new page_de_cours(user);
+            if(state){
+                    page.setVisible(true);
                     this.setVisible(false);
                 } else{
                     jLabel5.setText("Votre id ou votre mot de passe est incorrecte !");
-                }
             }
+           
         } catch (Exception e) {
                 jLabel5.setText("Votre id ou votre mot de passe est incorrecte !");
                 System.out.println("echec de connexion");

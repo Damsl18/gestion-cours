@@ -24,7 +24,6 @@ import static mysql.connexion.getConnection;
 public class cours {
     
     public static void insertData(int titulaire, String nom, String duree,String description){
-          page_de_cours page = new page_de_cours();
           String sql = "INSERT INTO cours (titulaire, nom_cours, duree, description) VALUES (?, ?, ?, ?)" ;
           try(PreparedStatement ps=getConnection().prepareStatement(sql)) {
               ps.setInt(1, titulaire);
@@ -75,8 +74,7 @@ public class cours {
                 String identifiant = String.valueOf(rs.getInt("id"));
                 String Titulaire = String.valueOf(rs.getInt("titulaire"));
                 String Nom = rs.getString("nom_cours");
-                String Duree = rs.getString("duree");
-                
+                String Duree = rs.getString("duree");                
                 String[] row = {identifiant, Nom, Titulaire, Duree};
                 table.addRow(row);               
                 table_toutcours.setModel(table);

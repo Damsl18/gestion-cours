@@ -15,32 +15,37 @@ import user_modele.utilisateurs;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import participation_modele.participation;
+import utilisateur_courant.utilisateurCourant;
 
 public class page_de_cours extends javax.swing.JFrame {
     /**
      * Creates new form page_de_cours
      */
     public String id;
-    public String name;
-    public String pname;
-    public String prename;
-    public String tel;
+    public String nom;
+    public String postnom;
+    public String prenom;
+    public String promo;
     public List<String> liste = new ArrayList<>();
     admin admis = new admin();
     
-    
-    public page_de_cours() {
-        initComponents();
-        
+    public page_de_cours(utilisateurCourant user) {
+        initComponents();       
         cours.remplirTableau(table_toutcours);
         participation.remplirTableau(table_cours, 1);
-                admin admis = new admin();
-                System.out.println("TEST B000");
-                System.out.println(admis.id);
         
-        
+        id_info.setText(user.getId());
+        nom_info.setText(user.getNom());
+        postnom_info.setText(user.getPostnom());
+        prenom_info.setText(user.getPrenom());
+        promotion_info.setText(user.getPromotion());
         
     }
+
+    public page_de_cours() {
+
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -431,8 +436,7 @@ public class page_de_cours extends javax.swing.JFrame {
             int id = Integer.parseInt(input_participer.getText());
             liste = cours.readById(id);
             String nom = liste.get(2);
-            label_participer.setText("Voulez vous participer au cours " + nom + " ?");
-            
+            label_participer.setText("Voulez vous participer au cours " + nom + " ?");    
         } catch (Exception e) {
             System.out.println("Echec !");
         }
