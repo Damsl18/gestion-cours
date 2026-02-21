@@ -21,24 +21,19 @@ public class page_de_cours extends javax.swing.JFrame {
     /**
      * Creates new form page_de_cours
      */
-    public String id;
-    public String nom;
-    public String postnom;
-    public String prenom;
-    public String promo;
     public List<String> liste = new ArrayList<>();
     admin admis = new admin();
     
     public page_de_cours(utilisateurCourant user) {
         initComponents();       
         cours.remplirTableau(table_toutcours);
-        participation.remplirTableau(table_cours, 1);
-        
-        id_info.setText(user.getId());
+        id_info.setText("ID " + user.getId());
         nom_info.setText(user.getNom());
         postnom_info.setText(user.getPostnom());
         prenom_info.setText(user.getPrenom());
         promotion_info.setText(user.getPromotion());
+        int id = Integer.parseInt(user.getId());
+        participation.remplirTableau(table_cours, id);
         
     }
 
@@ -66,7 +61,6 @@ public class page_de_cours extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_cours = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         vider_cours = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -85,7 +79,6 @@ public class page_de_cours extends javax.swing.JFrame {
         nom_info = new javax.swing.JLabel();
         postnom_info = new javax.swing.JLabel();
         prenom_info = new javax.swing.JLabel();
-        tel_info = new javax.swing.JLabel();
         promotion_info = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
 
@@ -143,8 +136,6 @@ public class page_de_cours extends javax.swing.JFrame {
         table_cours.setAlignmentY(5.0F);
         jScrollPane1.setViewportView(table_cours);
 
-        jLabel6.setText("Aucun cours pour l'instant");
-
         jButton2.setText("Supprimer le cours");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,13 +162,8 @@ public class page_de_cours extends javax.swing.JFrame {
                 .addComponent(vider_cours)
                 .addGap(292, 292, 292))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(438, 438, 438)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(360, 360, 360)
-                        .addComponent(jLabel6)))
+                .addGap(438, 438, 438)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -187,9 +173,7 @@ public class page_de_cours extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(vider_cours)
                     .addComponent(jButton2))
@@ -319,8 +303,6 @@ public class page_de_cours extends javax.swing.JFrame {
 
         prenom_info.setText("jLabel1");
 
-        tel_info.setText("jLabel1");
-
         promotion_info.setText("jLabel1");
 
         javax.swing.GroupLayout panel_infoLayout = new javax.swing.GroupLayout(panel_info);
@@ -334,7 +316,6 @@ public class page_de_cours extends javax.swing.JFrame {
                     .addComponent(nom_info)
                     .addComponent(postnom_info)
                     .addComponent(prenom_info)
-                    .addComponent(tel_info)
                     .addComponent(promotion_info))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -350,10 +331,8 @@ public class page_de_cours extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(prenom_info)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tel_info)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(promotion_info)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jLabel12.setText("Mes informations");
@@ -447,13 +426,13 @@ public class page_de_cours extends javax.swing.JFrame {
         // TODO add your handling code here:
         List<String> liste = new ArrayList<>();
         try {
-            int id = Integer.parseInt(input_participer.getText());
-            liste = cours.readById(id);
+            int etudiant = Integer.parseInt(input_participer.getText());
+            liste = cours.readById(etudiant);
             int id_cours = Integer.parseInt(liste.get(0));
-            int id_etudiant = 1;
+            int id_etudiant = Integer.parseInt(id_info.getText());
             participation.insertData(id_etudiant, id_cours);
             cours.remplirTableau(table_toutcours);
-            participation.remplirTableau(table_cours, 1);
+            participation.remplirTableau(table_cours, etudiant);
             label_participer.setText("Enregistrement effectué avec succès !");
             input_participer.setText("");
         } catch (Exception e) {
@@ -471,9 +450,9 @@ public class page_de_cours extends javax.swing.JFrame {
 
     private void vider_coursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vider_coursActionPerformed
         // TODO add your handling code here:
-        int id = 1;
+        int id = Integer.parseInt(id_info.getText());
         cours.viderTableau(table_cours, id);
-        participation.remplirTableau(table_cours, 1);
+        participation.remplirTableau(table_cours, id);
     }//GEN-LAST:event_vider_coursActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -534,7 +513,6 @@ public class page_de_cours extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -553,7 +531,6 @@ public class page_de_cours extends javax.swing.JFrame {
     private javax.swing.JLabel promotion_info;
     private javax.swing.JTable table_cours;
     private javax.swing.JTable table_toutcours;
-    private javax.swing.JLabel tel_info;
     private javax.swing.JButton valider_participer;
     private javax.swing.JButton vider_cours;
     // End of variables declaration//GEN-END:variables

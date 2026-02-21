@@ -16,6 +16,7 @@ public class utilisateurCourant {
     private String prenom;
     private String promotion;
 
+
     public utilisateurCourant(String id, String nom, String postnom, String prenom, String promotion) {
         this.id = id;
         this.nom = nom;
@@ -42,7 +43,5 @@ public class utilisateurCourant {
 
     public String getPromotion() {
         return promotion;
-    }
-       
-    
+    } 
 }

@@ -31,7 +31,7 @@ public class cours {
               ps.setString(3, duree);
               ps.setString(4, description);
               ps.executeUpdate();         
-              System.out.println("Success !");
+              System.out.println("Enregistrement du cours " + nom + " reussi !");
               
              
         } catch (Exception e) {
@@ -68,14 +68,16 @@ public class cours {
         table.addColumn("Nom du cours");
         table.addColumn("id Titulaire");
         table.addColumn("Duree");
+        table.addColumn("Statut");
         try (Statement stmt = getConnection().createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {            
             while (rs.next()) {
                 String identifiant = String.valueOf(rs.getInt("id"));
                 String Titulaire = String.valueOf(rs.getInt("titulaire"));
                 String Nom = rs.getString("nom_cours");
-                String Duree = rs.getString("duree");                
-                String[] row = {identifiant, Nom, Titulaire, Duree};
+                String Duree = rs.getString("duree"); 
+                String statut = rs.getString("statut");
+                String[] row = {identifiant, Nom, Titulaire, Duree, statut};
                 table.addRow(row);               
                 table_toutcours.setModel(table);
             }

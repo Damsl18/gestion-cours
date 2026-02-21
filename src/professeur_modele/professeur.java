@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import static mysql.connexion.getConnection;
@@ -75,12 +77,17 @@ public class professeur {
         }
     }
     
-    public static void readById(int id){
+    public static List<String> readById(int id){
         String sql =  "SELECT * FROM professeur WHERE id = ?";
+        List<String> liste = new ArrayList<>();
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)){
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
+                liste.add(String.valueOf(rs.getInt("id")));
+                liste.add(rs.getString("nom_prof"));
+                liste.add(rs.getString("postnom_prof"));
+                liste.add(rs.getString("prenom_prof"));
                 System.out.println("ID: " + rs.getInt("id") + 
                     " | Nom: " + rs.getString("nom_prof") + 
                     " | postnom: " + rs.getString("postnom_prof") + 
@@ -91,6 +98,7 @@ public class professeur {
             System.out.println("Erreur, id non trouvé");
             e.printStackTrace();
         }
+        return liste;
     }
     public static void update(int id, String nom, String postnom, String prenom, String tel) {
         String sql = "UPDATE professeur SET nom_prof = ?, postnom_prof = ?, prenom_prof = ?, tel_prof = ? WHERE id = ?";

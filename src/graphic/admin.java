@@ -187,22 +187,21 @@ public class admin extends javax.swing.JFrame {
             boolean state = utilisateurs.exist(id, mdp);
             if (administrator == id){
                 if(state){
-                    admis.setVisible(true);
-                    
+                    admis.setVisible(true);                    
                     this.setVisible(false);
                     
                 }
-            }
-            liste = utilisateurs.readById(id);
-            utilisateurCourant user = new utilisateurCourant(liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4));
-            page_de_cours page = new page_de_cours(user);
-            if(state){
+            } else{
+                liste = utilisateurs.readById(id);
+                utilisateurCourant user = new utilisateurCourant(liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4));
+                page_de_cours page = new page_de_cours(user);
+                if(state){
                     page.setVisible(true);
                     this.setVisible(false);
                 } else{
                     jLabel5.setText("Votre id ou votre mot de passe est incorrecte !");
             }
-           
+            }
         } catch (Exception e) {
                 jLabel5.setText("Votre id ou votre mot de passe est incorrecte !");
                 System.out.println("echec de connexion");

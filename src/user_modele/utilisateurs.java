@@ -137,14 +137,15 @@ public class utilisateurs {
         }
         return liste;
     }
-    public static void update(int id, String nom, String postnom, String prenom, String tel) {
-        String sql = "UPDATE utilisateurs SET nom_user = ?, postnom_user = ?, prenom_user = ?, tel_user = ? WHERE id = ?";
+    public static void update(int id, String nom, String postnom, String prenom, String tel, String promo) {
+        String sql = "UPDATE utilisateurs SET nom_user = ?, postnom_user = ?, prenom_user = ?, tel_user = ?, promotion = ? WHERE id = ?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
             pstmt.setString(1, nom );
             pstmt.setString(2, postnom);
             pstmt.setString(3, prenom);
             pstmt.setString(4, tel);
-            pstmt.setInt(5, id);
+            pstmt.setString(5, promo);
+            pstmt.setInt(6, id);
             pstmt.executeUpdate();
             int test = pstmt.executeUpdate(); 
             if (test>0) {

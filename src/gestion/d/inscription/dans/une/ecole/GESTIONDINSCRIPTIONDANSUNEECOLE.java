@@ -27,6 +27,8 @@ public class GESTIONDINSCRIPTIONDANSUNEECOLE {
         List<String> liste = new ArrayList<>();
         utilisateurs user = new utilisateurs();
         System.out.println("Hello world");
+        admin connexion = new admin();
+        connexion.setVisible(true);
        
        
         
